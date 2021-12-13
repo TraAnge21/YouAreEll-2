@@ -56,17 +56,17 @@ public class MessageController {
 
 
     public Message getMessageForSequence(String seq) {
-        Message [] arrayMessageSequence = null;
+        Message arrayMessageSequence = null;
 
         try{
-            arrayMessageSequence = restTemplate.getForObject(BASE_URL +seq,Message [].class, seq);
+            arrayMessageSequence = restTemplate.getForObject(BASE_URL +seq,Message.class, String.class);
 
         } catch (RestClientResponseException e ) {
             e.getRawStatusCode();
         } catch ( ResourceAccessException e) {
             e.printStackTrace();
         }
-        return new arrayMessageSequence;
+        return  arrayMessageSequence;
 
     }
 
@@ -76,7 +76,7 @@ public class MessageController {
         Message [] arrayMessage = null;
 
         try{
-            arrayMessage = restTemplate.getForObject(BASE_URL,Message [].class);
+            arrayMessage = restTemplate.getForObject(BASE_URL + myId.getUid() + friendId.getUid(),Message [].class, Id[].class);
 
         } catch (RestClientResponseException e ) {
             e.getRawStatusCode();
@@ -92,8 +92,16 @@ public class MessageController {
 
     public Message postMessage(Id myId, Id toId, Message msg) {
 
-
+        try{
+            HttpEntity <Message> entity = makeEntity(msg);
+            return restTemplate.postForObject(BASE_URL +myId.getUid()+ toId.getUid()+msg.getMessage(), Id.class, Message.class);
+        } catch (RestClientResponseException e ) {
+            e.getRawStatusCode();
+        } catch ( ResourceAccessException e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
 

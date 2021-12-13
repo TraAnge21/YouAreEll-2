@@ -9,7 +9,13 @@ import java.util.List;
 
 import controllers.IdController;
 import controllers.MessageController;
+import models.Id;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import youareell.YouAreEll;
+
+import static controllers.IdController.*;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
 public class SimpleShell {
@@ -68,10 +74,16 @@ public class SimpleShell {
 
                 // ids
                 if (list.contains("ids")) {
-                    String results = webber.get_ids();
+//                    ArrayList<Id> results = parseId(IdController.getIds(ids));
+//                    for ( Id idResults : results) {
+//                        SimpleShell.prettyPrint(idResults.getGithub() + "" +idResults.getName()+ "\n");
+//                    }
+
+                    String results = IdController.getIds();
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
+
 
                 // messages
                 if (list.contains("messages")) {
@@ -124,7 +136,11 @@ public class SimpleShell {
              * 5. output the contents returned by the command
              */
 
+
+
         }
+
+
 
 
     }
